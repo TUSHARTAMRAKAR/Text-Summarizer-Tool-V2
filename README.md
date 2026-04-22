@@ -2,61 +2,47 @@
 
 <br/>
 
-# ◈ SummarAI
-## AI-Powered Text Summarization Tool
+# ◈ SummarAI — V2
+## Full AI-Powered Text Summarization Tool
 
 <p align="center">
-  <em>Paste any article. Get a sharp, accurate summary in seconds.</em><br/>
-  <em>Powered by state-of-the-art NLP — completely free, runs locally.</em>
+  <em>The complete version — runs the full BART transformer model locally.</em><br/>
+  <em>Both Abstractive (AI) and Extractive (TF-IDF) summarization, fully unlocked.</em>
 </p>
 
 <br/>
 
 [![Python](https://img.shields.io/badge/Python-3.10+-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://python.org)
 [![Flask](https://img.shields.io/badge/Flask-3.0-000000?style=for-the-badge&logo=flask&logoColor=white)](https://flask.palletsprojects.com)
-[![HuggingFace](https://img.shields.io/badge/HuggingFace-Transformers-FFD21E?style=for-the-badge&logo=huggingface&logoColor=black)](https://huggingface.co)
+[![HuggingFace](https://img.shields.io/badge/HuggingFace-BART--Large--CNN-FFD21E?style=for-the-badge&logo=huggingface&logoColor=black)](https://huggingface.co/facebook/bart-large-cnn)
 [![PyTorch](https://img.shields.io/badge/PyTorch-2.2-EE4C2C?style=for-the-badge&logo=pytorch&logoColor=white)](https://pytorch.org)
 [![License](https://img.shields.io/badge/License-MIT-22C55E?style=for-the-badge)](LICENSE)
-[![Status](https://img.shields.io/badge/Status-Active-22C55E?style=for-the-badge)]()
+[![Version](https://img.shields.io/badge/Version-2.0.0-8B5CF6?style=for-the-badge)]()
 
 <br/>
 
-### 🌐 [Live Demo →](https://your-app.onrender.com) &nbsp;&nbsp;|&nbsp;&nbsp; 📖 [API Docs](docs/API.md) &nbsp;&nbsp;|&nbsp;&nbsp; 🐛 [Report a Bug](https://github.com/TUSHARTAMRAKAR/Text-Summarizer-Tool/issues)
+### 📦 [V1 — Hosted Version](https://github.com/TUSHARTAMRAKAR/Text-Summarizer-Tool) &nbsp;|&nbsp; 🌐 [Live Demo (V1)](https://summari-84uc.onrender.com) &nbsp;|&nbsp; 📖 [API Docs](docs/API.md)
 
 <br/>
+
+> ⚠️ **V2 is designed to run locally.** It loads the full `facebook/bart-large-cnn` model (~1.6GB)  
+> which requires ~2GB RAM — beyond free cloud hosting limits.  
+> For the hosted version, see [SummarAI V1](https://github.com/TUSHARTAMRAKAR/Text-Summarizer-Tool).
 
 </div>
 
 ---
 
-## 📌 Table of Contents
+## 📌 V1 vs V2 — What's the Difference?
 
-- [About the Project](#-about-the-project)
-- [Features](#-features)
-- [Live Demo](#-live-demo)
-- [Tech Stack](#-tech-stack)
-- [Project Structure](#-project-structure)
-- [Getting Started](#-getting-started)
-- [API Reference](#-api-reference)
-- [How It Works](#-how-it-works)
-- [Running Tests](#-running-tests)
-- [Roadmap](#-roadmap)
-- [Contributing](#-contributing)
-- [License](#-license)
-- [Author](#-author)
-
----
-
-## 📖 About the Project
-
-**SummarAI** is a full-stack web application that uses Natural Language Processing (NLP) to automatically summarize long-form text — articles, research papers, blog posts, news — into concise, readable summaries.
-
-The project implements **two distinct summarization approaches**:
-
-- **Abstractive** — uses the `facebook/bart-large-cnn` transformer model (fine-tuned on 300,000+ CNN/DailyMail articles) to *understand* the text and write a fresh summary in its own words, just like a human would.
-- **Extractive** — uses a custom-built TF-IDF scoring algorithm to identify and return the most statistically important sentences from the original text.
-
-This was built as a beginner-to-intermediate learning project to understand NLP pipelines, REST API design, and full-stack web development — from model inference all the way to a production-ready interface.
+| Feature | V1 (Hosted) | V2 (Local) |
+|---|---|---|
+| 🌐 **Deployment** | Live on Render (free tier) | Run locally on your machine |
+| 🧠 **Abstractive (BART)** | ❌ Disabled (RAM limit) | ✅ Fully working |
+| ✂️ **Extractive (TF-IDF)** | ✅ Working | ✅ Working |
+| 💾 **RAM Required** | < 512MB | ~2GB |
+| ⚡ **Summary Quality** | Good (extractive) | Best (full AI model) |
+| 🔗 **Access** | Browser, anywhere | `localhost:5000` |
 
 ---
 
@@ -64,80 +50,56 @@ This was built as a beginner-to-intermediate learning project to understand NLP 
 
 | Feature | Description |
 |---|---|
-| 🧠 **Abstractive Summarization** | `facebook/bart-large-cnn` rewrites text in its own words — natural, human-sounding output |
-| ✂️ **Extractive Summarization** | Custom TF-IDF engine selects the most important original sentences |
-| 📏 **3 Summary Lengths** | Short, Medium, Long — control exactly how detailed the output is |
-| 📊 **Live Statistics** | Compression ratio, word counts, and method used — shown after every summary |
-| 📋 **One-Click Copy** | Copy the generated summary to clipboard instantly |
-| 🎯 **Built-in Sample Article** | Demo article included — works immediately with no setup |
-| 🌐 **Clean REST API** | JSON API with 3 endpoints — can be integrated into any app |
-| 💯 **100% Free & Local** | No paid APIs, no subscriptions, no data sent to the cloud |
-
----
-
-## 🌐 Live Demo
-
-> 🚀 The app is deployed and accessible here:
-
-**[https://your-app.onrender.com](https://your-app.onrender.com)**
-
-> ⚠️ Note: The app runs on Render's free tier — it may take 30–60 seconds to wake up on first visit.
-
----
-
-## 🛠️ Tech Stack
-
-| Layer | Technology | Why |
-|---|---|---|
-| **Frontend** | HTML5, CSS3, Vanilla JavaScript | Lightweight, no framework overhead |
-| **Backend** | Python 3.10, Flask 3.0 | Simple, fast REST API server |
-| **AI Model** | HuggingFace Transformers + BART | State-of-the-art abstractive summarization |
-| **NLP Algorithm** | Custom TF-IDF (no libraries) | Fast extractive summarization, zero dependencies |
-| **Deployment** | Render | Free cloud hosting for Python apps |
-| **Testing** | pytest | Unit + integration test coverage |
+| 🧠 **Full Abstractive Summarization** | `facebook/bart-large-cnn` — reads, understands, and rewrites text like a human |
+| ✂️ **Extractive Summarization** | Custom TF-IDF engine — fast, offline, no model needed |
+| 📏 **3 Summary Lengths** | Short, Medium, Long — full control over output detail |
+| 📊 **Live Statistics** | Compression ratio, word counts, method used |
+| 📋 **One-Click Copy** | Copy summary to clipboard instantly |
+| 🎯 **Built-in Demo Article** | Try it immediately with zero setup |
+| 🌐 **REST API** | 3 clean JSON endpoints — integrate anywhere |
 
 ---
 
 ## 🗂️ Project Structure
 
 ```
-Text-Summarizer-Tool/
+Text-Summarizer-Tool-V2/
 │
 ├── 📂 backend/
-│   ├── app.py              # Flask app — all API routes and server config
-│   └── summarizer.py       # Core NLP engine (BART abstractive + TF-IDF extractive)
+│   ├── app.py              # Flask app — API routes and server config
+│   └── summarizer.py       # Full NLP engine — BART + TF-IDF, no restrictions
 │
 ├── 📂 frontend/
 │   ├── templates/
-│   │   └── index.html      # Main UI — single page app
+│   │   └── index.html      # Main web interface
 │   └── static/
-│       ├── css/
-│       │   └── style.css   # Dark editorial theme, fully responsive
-│       └── js/
-│           └── main.js     # UI logic, API calls, state management
+│       ├── css/style.css   # Dark editorial UI theme
+│       └── js/main.js      # Frontend logic and API calls
 │
 ├── 📂 tests/
-│   └── test_summarizer.py  # 15 unit + integration tests (pytest)
+│   └── test_summarizer.py  # Unit + integration tests (pytest)
 │
 ├── 📂 docs/
-│   └── API.md              # Full API endpoint reference
+│   └── API.md              # Full API reference
 │
-├── requirements.txt        # All Python dependencies with pinned versions
-├── .gitignore              # Excludes venv, cache, model files from Git
-├── LICENSE                 # MIT License
-└── README.md               # This file
+├── requirements.txt        # Python dependencies
+├── .gitignore
+├── LICENSE
+└── README.md
 ```
 
 ---
 
 ## 🚀 Getting Started
 
-### Prerequisites
+### System Requirements
 
-- Python 3.10 or higher — [Download](https://python.org/downloads)
-- pip (bundled with Python)
-- ~2GB free disk space (for the BART model cache)
-- Git — [Download](https://git-scm.com)
+| Requirement | Minimum |
+|---|---|
+| **Python** | 3.10 or higher |
+| **RAM** | 4GB recommended (2GB minimum) |
+| **Disk Space** | ~3GB free (model cache + dependencies) |
+| **Internet** | Required on first run (model download) |
 
 ---
 
@@ -146,17 +108,17 @@ Text-Summarizer-Tool/
 **1. Clone the repository**
 
 ```bash
-git clone https://github.com/TUSHARTAMRAKAR/Text-Summarizer-Tool.git
-cd Text-Summarizer-Tool
+git clone https://github.com/TUSHARTAMRAKAR/Text-Summarizer-Tool-V2.git
+cd Text-Summarizer-Tool-V2
 ```
 
-**2. Create a virtual environment**
+**2. Create virtual environment**
 
 ```bash
 python -m venv venv
 ```
 
-**3. Activate the virtual environment**
+**3. Activate it**
 
 ```bash
 # Windows
@@ -166,18 +128,13 @@ venv\Scripts\activate
 source venv/bin/activate
 ```
 
-You'll see `(venv)` at the start of your terminal prompt. ✅
-
 **4. Install dependencies**
 
 ```bash
 pip install -r requirements.txt
 ```
 
-> ⚠️ The first run will download the `facebook/bart-large-cnn` model (~1.6GB).  
-> This only happens once — it's cached locally afterwards.
-
-**5. Start the server**
+**5. Run the app**
 
 ```bash
 cd backend
@@ -190,44 +147,49 @@ python app.py
 http://localhost:5000
 ```
 
-The app is running. 🎉
+> ⏳ **First run:** The BART model (~1.6GB) downloads automatically and is cached locally.  
+> This takes 5–15 minutes depending on your internet. Every run after that is instant.
+
+---
+
+## 🧠 How Abstractive Summarization Works (BART)
+
+```
+Your Article Text
+        ↓
+  BART Encoder
+  (reads every word, builds deep contextual understanding)
+        ↓
+  BART Decoder
+  (generates a brand new summary, word by word)
+        ↓
+  Fresh Human-like Summary
+  (completely new sentences — not copied from original)
+```
+
+**`facebook/bart-large-cnn`** was trained by Meta AI on 300,000+ CNN and DailyMail news articles paired with human-written summaries. It learned to compress information exactly the way a journalist would.
 
 ---
 
 ## 🔌 API Reference
 
-Full documentation → [`docs/API.md`](docs/API.md)
-
 Base URL: `http://localhost:5000`
-
----
 
 ### `POST /api/summarize`
 
-Summarize a piece of text.
-
-**Request body:**
-
 ```json
 {
-  "text": "Paste your article text here...",
+  "text": "Your article here...",
   "length": "medium",
   "method": "abstractive"
 }
 ```
 
-| Parameter | Type | Options | Default |
-|---|---|---|---|
-| `text` | `string` | 50 – 50,000 characters | required |
-| `length` | `string` | `short` · `medium` · `long` | `medium` |
-| `method` | `string` | `abstractive` · `extractive` | `abstractive` |
-
-**Success response `200`:**
-
+**Response:**
 ```json
 {
   "success": true,
-  "summary": "Artificial intelligence is reshaping industries worldwide...",
+  "summary": "...",
   "original_word_count": 500,
   "summary_word_count": 82,
   "compression_ratio": "84%",
@@ -235,146 +197,66 @@ Summarize a piece of text.
 }
 ```
 
-**Error response `400`:**
-
-```json
-{
-  "success": false,
-  "error": "Text is too short. Please provide at least 50 characters."
-}
-```
-
----
-
 ### `GET /api/health`
-
-Returns server and model status.
-
 ```json
-{
-  "status": "healthy",
-  "model_loaded": true,
-  "version": "1.0.0"
-}
+{ "status": "healthy", "model_loaded": true, "version": "2.0.0" }
 ```
-
----
 
 ### `GET /api/sample`
+Returns a built-in demo article.
 
-Returns a built-in demo article for testing.
-
----
-
-## 🧠 How It Works
-
-### Abstractive Summarization (BART Transformer)
-
-```
-Your Text
-    ↓
-BART Encoder  →  Reads and builds deep understanding of the text
-    ↓
-BART Decoder  →  Generates a brand new summary, word by word
-    ↓
-Fresh Summary (written in the model's own words)
-```
-
-BART (Bidirectional and Auto-Regressive Transformer) was fine-tuned by Facebook AI on the CNN/DailyMail dataset — 300,000+ news articles with human-written summaries. It learns to compress information the same way a journalist would.
-
----
-
-### Extractive Summarization (TF-IDF)
-
-```
-Your Text
-    ↓
-Split into individual sentences
-    ↓
-Score each sentence using TF-IDF weights
-(words rare in the document but frequent in the sentence = more important)
-    ↓
-Rank sentences by score
-    ↓
-Return top N sentences in original order
-```
-
-**TF-IDF** = Term Frequency × Inverse Document Frequency. It mathematically identifies which words — and therefore which sentences — carry the most unique information in the document. No AI model needed, works fully offline, instant results.
+Full docs → [`docs/API.md`](docs/API.md)
 
 ---
 
 ## 🧪 Running Tests
 
 ```bash
-# From project root with venv active
 python -m pytest tests/ -v
 ```
 
-Expected output:
+---
 
-```
-tests/test_summarizer.py::TestExtractive::test_extractive_returns_dict     PASSED
-tests/test_summarizer.py::TestExtractive::test_extractive_success_flag     PASSED
-tests/test_summarizer.py::TestExtractive::test_extractive_has_summary      PASSED
-tests/test_summarizer.py::TestExtractive::test_extractive_method_label     PASSED
-tests/test_summarizer.py::TestExtractive::test_extractive_word_counts      PASSED
-tests/test_summarizer.py::TestExtractive::test_extractive_short_length     PASSED
-tests/test_summarizer.py::TestWordCounting::test_compression_ratio         PASSED
-tests/test_summarizer.py::TestEdgeCases::test_handles_multiline_text       PASSED
-tests/test_summarizer.py::TestEdgeCases::test_all_length_options           PASSED
-tests/test_summarizer.py::TestAPIEndpoints::test_health_endpoint           PASSED
-tests/test_summarizer.py::TestAPIEndpoints::test_summarize_endpoint_valid  PASSED
-...
+## 🛠️ Tech Stack
 
-15 passed in 3.42s ✅
-```
+| Layer | Technology |
+|---|---|
+| **Frontend** | HTML5, CSS3, Vanilla JavaScript |
+| **Backend** | Python 3.10+, Flask 3.0 |
+| **AI Model** | HuggingFace Transformers — `facebook/bart-large-cnn` |
+| **Extractive NLP** | Custom TF-IDF (no extra libraries) |
+| **Testing** | pytest |
 
 ---
 
 ## 🗺️ Roadmap
 
-- [x] Abstractive summarization (BART model)
-- [x] Extractive summarization (TF-IDF)
-- [x] 3 summary length options
-- [x] REST API with JSON responses
+- [x] Full BART abstractive summarization
+- [x] TF-IDF extractive summarization
 - [x] Beautiful responsive web UI
+- [x] REST API with JSON responses
 - [x] Unit + integration test coverage
-- [x] Deployed to Render
-- [ ] PDF file upload and summarization
-- [ ] Summarize from a URL (paste a link, get a summary)
+- [ ] PDF upload and summarization
+- [ ] Summarize from URL
 - [ ] Export summary as .txt / .pdf
-- [ ] Multi-language support
-- [ ] Summary history (save and revisit past summaries)
-- [ ] Browser extension
+- [ ] GPU acceleration support
+- [ ] Multi-language summarization
 
 ---
 
 ## 🤝 Contributing
 
-Contributions are welcome and appreciated!
-
-1. Fork the repository
-2. Create your feature branch
-```bash
-git checkout -b feature/your-feature-name
-```
-3. Commit your changes using [Conventional Commits](https://www.conventionalcommits.org/)
-```bash
-git commit -m "feat: add PDF upload support"
-```
-4. Push to your branch
-```bash
-git push origin feature/your-feature-name
-```
-5. Open a Pull Request and describe what you changed and why
+1. Fork the repo
+2. Create your branch: `git checkout -b feature/your-feature`
+3. Commit: `git commit -m "feat: your feature"`
+4. Push: `git push origin feature/your-feature`
+5. Open a Pull Request
 
 ---
 
 ## 📄 License
 
-This project is licensed under the **MIT License** — see the [LICENSE](LICENSE) file for details.
-
-You're free to use, copy, modify, and distribute this project, as long as the original license is included.
+Licensed under the [MIT License](LICENSE).
 
 ---
 
@@ -390,18 +272,12 @@ You're free to use, copy, modify, and distribute this project, as long as the or
 
 <br/>
 
-*Built from scratch as a learning project — NLP, Flask, full-stack development, and Git workflow.*
-
-<br/>
+*V2 — The full local version with complete AI capabilities.*
 
 ---
 
-**⭐ Found this useful? Give it a star — it helps others discover the project!**
-
----
+⭐ **If this helped you, give it a star!**
 
 <sub>Made with ❤️ by Tushar Tamrakar</sub>
-
-<br/>
 
 </div>
