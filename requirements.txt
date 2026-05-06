@@ -2,10 +2,17 @@
 flask==3.0.0
 flask-cors==4.0.0
 
-# NLP / AI — Full versions for local run with BART model
+# NLP / AI
 transformers==4.35.2
 torch==2.2.0
 sentencepiece==0.2.0
+
+# PDF support
+pymupdf==1.23.8
+
+# URL scraping
+requests==2.31.0
+beautifulsoup4==4.12.3
 
 # Testing
 pytest==7.4.0

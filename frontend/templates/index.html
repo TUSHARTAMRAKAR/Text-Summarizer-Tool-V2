@@ -1,39 +1,43 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>SummarAI — Text Summarization Tool</title>
+  <title>SummarAI V2 — Text Summarization Tool</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700;1,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
 
-  <!-- ── Noise Overlay ───────────────────────────────── -->
   <div class="noise"></div>
 
-  <!-- ── Header ─────────────────────────────────────── -->
+  <!-- ── Header ───────────────────────────────────────────── -->
   <header class="header">
     <div class="header-inner">
       <div class="logo">
         <span class="logo-icon">◈</span>
         <span class="logo-text">SummarAI</span>
+        <span class="version-badge">V2</span>
       </div>
       <nav class="header-nav">
-        <span class="nav-tag">NLP Powered</span>
+        <span class="nav-tag">Full BART Model</span>
         <span class="nav-dot"></span>
-        <span class="nav-tag">100% Free</span>
+        <span class="nav-tag">PDF Support</span>
         <span class="nav-dot"></span>
-        <span class="nav-tag">Open Source</span>
+        <span class="nav-tag">URL Scraping</span>
       </nav>
+      <!-- Theme Toggle -->
+      <button class="theme-toggle" id="themeToggle" title="Toggle dark/light mode">
+        <span class="theme-icon">☀️</span>
+      </button>
     </div>
   </header>
 
-  <!-- ── Hero ───────────────────────────────────────── -->
+  <!-- ── Hero ─────────────────────────────────────────────── -->
   <section class="hero">
-    <div class="hero-label">TEXT INTELLIGENCE SYSTEM v1.0</div>
+    <div class="hero-label">TEXT INTELLIGENCE SYSTEM v2.0 — FULL AI MODE</div>
     <h1 class="hero-title">
       <span class="title-line">TURN</span>
       <span class="title-line accent">THOUSANDS</span>
@@ -41,18 +45,18 @@
       <span class="title-line accent">CLARITY</span>
     </h1>
     <p class="hero-sub">
-      Paste any article, research paper, or document. <br>
-      Get a sharp, accurate summary in seconds — powered by state-of-the-art NLP.
+      Paste text, upload a PDF, or drop a URL.<br/>
+      Full BART transformer — both abstractive & extractive modes unlocked.
     </p>
   </section>
 
-  <!-- ── Main App ────────────────────────────────────── -->
+  <!-- ── Main App ──────────────────────────────────────────── -->
   <main class="app-container">
 
     <!-- Controls Bar -->
     <div class="controls-bar">
       <div class="control-group">
-        <label class="control-label">SUMMARY LENGTH</label>
+        <label class="control-label">LENGTH</label>
         <div class="toggle-group" id="lengthToggle">
           <button class="toggle-btn" data-value="short">Short</button>
           <button class="toggle-btn active" data-value="medium">Medium</button>
@@ -66,8 +70,16 @@
           <button class="toggle-btn" data-value="extractive">Extractive</button>
         </div>
       </div>
+      <div class="control-group">
+        <label class="control-label">INPUT SOURCE</label>
+        <div class="toggle-group" id="sourceToggle">
+          <button class="toggle-btn active" data-value="text">✏️ Text</button>
+          <button class="toggle-btn" data-value="pdf">📎 PDF</button>
+          <button class="toggle-btn" data-value="url">🔗 URL</button>
+        </div>
+      </div>
       <button class="sample-btn" id="loadSampleBtn">
-        <span>Load Sample Article</span>
+        <span>Load Sample</span>
         <span class="btn-arrow">↗</span>
       </button>
     </div>
@@ -80,22 +92,57 @@
         <div class="panel-header">
           <div class="panel-title">
             <span class="panel-num">01</span>
-            INPUT TEXT
+            <span id="inputPanelTitle">INPUT TEXT</span>
           </div>
           <div class="panel-actions">
-            <button class="icon-btn" id="clearBtn" title="Clear text">✕</button>
+            <button class="icon-btn" id="clearBtn" title="Clear">✕ Clear</button>
             <div class="word-counter" id="inputCounter">0 words</div>
           </div>
         </div>
-        <textarea
-          id="inputText"
-          class="text-area"
-          placeholder="Paste your article, essay, research paper, or any long-form text here…"
-          spellcheck="false"
-        ></textarea>
+
+        <!-- Text Input -->
+        <div class="input-section active" id="textInputSection">
+          <textarea
+            id="inputText"
+            class="text-area"
+            placeholder="Paste your article, essay, research paper, or any long-form text here…"
+            spellcheck="false"
+          ></textarea>
+        </div>
+
+        <!-- PDF Input -->
+        <div class="input-section" id="pdfInputSection">
+          <div class="upload-zone" id="pdfDropZone">
+            <div class="upload-icon">📄</div>
+            <p class="upload-title">Drop your PDF here</p>
+            <p class="upload-sub">or click to browse</p>
+            <input type="file" id="pdfFileInput" accept=".pdf" hidden/>
+            <button class="upload-browse-btn" onclick="document.getElementById('pdfFileInput').click()">
+              Browse PDF
+            </button>
+            <div class="upload-info" id="pdfInfo" style="display:none"></div>
+          </div>
+        </div>
+
+        <!-- URL Input -->
+        <div class="input-section" id="urlInputSection">
+          <div class="url-zone">
+            <div class="url-icon">🔗</div>
+            <p class="upload-title">Paste an article URL</p>
+            <p class="upload-sub">The app will fetch and summarize the article automatically</p>
+            <input
+              type="url"
+              id="urlInput"
+              class="url-input"
+              placeholder="https://example.com/article..."
+            />
+            <p class="url-hint">Works with news articles, blog posts, Wikipedia pages, and more</p>
+          </div>
+        </div>
+
       </div>
 
-      <!-- Center Arrow -->
+      <!-- Center Divider -->
       <div class="center-divider">
         <div class="divider-line"></div>
         <button class="summarize-btn" id="summarizeBtn">
@@ -113,55 +160,68 @@
             SUMMARY
           </div>
           <div class="panel-actions">
-            <button class="icon-btn" id="copyBtn" title="Copy summary" style="display:none">⎘ Copy</button>
+            <button class="icon-btn" id="copyBtn" style="display:none">⎘ Copy</button>
+            <button class="icon-btn export-btn" id="exportTxtBtn" style="display:none">↓ TXT</button>
+            <button class="icon-btn export-btn" id="exportPdfBtn" style="display:none">↓ PDF</button>
             <div class="word-counter" id="outputCounter">— words</div>
           </div>
         </div>
 
-        <!-- Empty State -->
         <div class="output-empty" id="emptyState">
           <div class="empty-icon">◈</div>
           <p>Your summary will appear here</p>
-          <span>Paste text on the left and hit Summarize</span>
+          <span>Choose a source and hit Summarize</span>
         </div>
 
-        <!-- Loading State -->
         <div class="output-loading" id="loadingState" style="display:none">
           <div class="loading-bars">
             <span></span><span></span><span></span><span></span><span></span>
           </div>
-          <p>Analyzing text…</p>
+          <p id="loadingMsg">Analyzing text…</p>
         </div>
 
-        <!-- Summary Result -->
         <div class="output-result" id="resultState" style="display:none">
           <p id="summaryText" class="summary-text"></p>
           <div class="stats-bar" id="statsBar"></div>
         </div>
 
-        <!-- Error State -->
         <div class="output-error" id="errorState" style="display:none">
           <div class="error-icon">⚠</div>
-          <p id="errorMsg">Something went wrong. Please try again.</p>
+          <p id="errorMsg"></p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── History Panel ──────────────────────────────────── -->
+    <div class="history-section">
+      <div class="history-header">
+        <div class="history-title">
+          <span class="panel-num">03</span>
+          SUMMARY HISTORY
+          <span class="history-count" id="historyCount">0 summaries</span>
+        </div>
+        <button class="icon-btn" id="clearHistoryBtn">✕ Clear All</button>
+      </div>
+      <div class="history-list" id="historyList">
+        <div class="history-empty">
+          <p>Your last 10 summaries will appear here</p>
         </div>
       </div>
     </div>
 
   </main>
 
-  <!-- ── Footer ─────────────────────────────────────── -->
+  <!-- ── Footer ───────────────────────────────────────────── -->
   <footer class="footer">
     <div class="footer-inner">
       <div class="footer-left">
-        <span>Built with Python · Flask · HuggingFace Transformers</span>
+        <span>Built with Python · Flask · HuggingFace BART · PyMuPDF · BeautifulSoup</span>
         <span class="footer-sep">·</span>
-        <a href="https://github.com/YOUR_USERNAME/text-summarizer-tool" class="footer-link" target="_blank">
+        <a href="https://github.com/TUSHARTAMRAKAR/Text-Summarizer-Tool-V2" class="footer-link" target="_blank">
           View on GitHub ↗
         </a>
       </div>
-      <div class="footer-right">
-        By Tushar❤️
-      </div>
+      <div class="footer-right">By Tushar❤️</div>
     </div>
   </footer>
 
