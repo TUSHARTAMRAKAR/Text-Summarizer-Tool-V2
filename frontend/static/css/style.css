@@ -305,3 +305,137 @@ body {
   .divider-line { flex: 1; width: auto; height: 1px; background: linear-gradient(to right, transparent, var(--border2), transparent); }
   .summarize-btn { writing-mode: horizontal-lr; flex-direction: row; width: auto; padding: 12px 28px; }
 }
+
+
+
+/* ══════════════════════════════════════════════════════
+   ENHANCEMENT 1 — Header Nav Pills
+══════════════════════════════════════════════════════ */
+.header-nav { display: flex; align-items: center; gap: 8px; }
+
+.nav-pill {
+  display: flex; align-items: center; gap: 6px;
+  font-family: var(--font-mono); font-size: 11px; font-weight: 500;
+  padding: 4px 12px; border-radius: 99px; border: 1px solid transparent;
+  transition: all 0.3s; cursor: default; white-space: nowrap;
+}
+.pill-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; animation: pillPulse 2s ease-in-out infinite; }
+
+.pill-ai   { background: rgba(232,255,71,0.08);  border-color: rgba(232,255,71,0.3);  color: #e8ff47; }
+.pill-pdf  { background: rgba(96,165,250,0.08);  border-color: rgba(96,165,250,0.3);  color: #60a5fa; }
+.pill-url  { background: rgba(167,139,250,0.08); border-color: rgba(167,139,250,0.3); color: #a78bfa; }
+.pill-free { background: rgba(52,211,153,0.08);  border-color: rgba(52,211,153,0.3);  color: #34d399; }
+
+.pill-ai  .pill-dot  { background: #e8ff47; animation-delay: 0s;   }
+.pill-pdf .pill-dot  { background: #60a5fa; animation-delay: 0.4s; }
+.pill-url .pill-dot  { background: #a78bfa; animation-delay: 0.8s; }
+.pill-free .pill-dot { background: #34d399; animation-delay: 1.2s; }
+
+.pill-ai:hover   { background: rgba(232,255,71,0.15);  box-shadow: 0 0 12px rgba(232,255,71,0.2);  }
+.pill-pdf:hover  { background: rgba(96,165,250,0.15);  box-shadow: 0 0 12px rgba(96,165,250,0.2);  }
+.pill-url:hover  { background: rgba(167,139,250,0.15); box-shadow: 0 0 12px rgba(167,139,250,0.2); }
+.pill-free:hover { background: rgba(52,211,153,0.15);  box-shadow: 0 0 12px rgba(52,211,153,0.2);  }
+
+[data-theme="light"] .pill-ai   { background: rgba(92,138,0,0.1);   border-color: rgba(92,138,0,0.4);   color: #3d6b00; }
+[data-theme="light"] .pill-pdf  { background: rgba(37,99,235,0.1);  border-color: rgba(37,99,235,0.4);  color: #1d4ed8; }
+[data-theme="light"] .pill-url  { background: rgba(109,40,217,0.1); border-color: rgba(109,40,217,0.4); color: #6d28d9; }
+[data-theme="light"] .pill-free { background: rgba(4,120,87,0.1);   border-color: rgba(4,120,87,0.4);   color: #065f46; }
+
+@keyframes pillPulse { 0%,100% { opacity:1; transform:scale(1); } 50% { opacity:0.3; transform:scale(0.7); } }
+@media (max-width: 1100px) { .pill-free { display: none; } }
+@media (max-width: 900px)  { .header-nav { display: none; } }
+
+
+/* ══════════════════════════════════════════════════════
+   ENHANCEMENT 2 — Animated Hero Title (BULLETPROOF)
+══════════════════════════════════════════════════════ */
+
+/* Remove gradient-text class effects completely — use color animation instead */
+/* gradient-text: color only, fadeUp still works via title-line class */
+[data-theme="dark"] .gradient-text {
+  color: #e8ff47;
+}
+[data-theme="light"] .gradient-text {
+  color: #3d6b00;
+}
+
+/* Subtle float on non-accent lines */
+.title-line:nth-child(1),
+.title-line:nth-child(3) {
+  animation: fadeUp 0.6s ease forwards, floatText 6s ease-in-out infinite;
+}
+.title-line:nth-child(1) { animation-delay: 0.2s, 2s; }
+.title-line:nth-child(3) { animation-delay: 0.4s, 2.5s; }
+
+@keyframes floatText {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-5px); }
+}
+
+
+/* ══════════════════════════════════════════════════════
+   ENHANCEMENT 3 — Industry Grade Footer
+══════════════════════════════════════════════════════ */
+.footer { border-top: 1px solid var(--border); background: var(--bg2); padding: 0; }
+
+.footer-top {
+  max-width: 1280px; margin: 0 auto; padding: 40px 32px 32px;
+  display: flex; flex-direction: column; align-items: center;
+  gap: 16px; text-align: center; border-bottom: 1px solid var(--border);
+}
+
+.footer-brand { display: flex; align-items: center; gap: 10px; }
+.footer-logo-icon { color: var(--accent); font-size: 22px; animation: spin 8s linear infinite; }
+.footer-logo-text { font-family: var(--font-head); font-size: 24px; letter-spacing: 3px; color: var(--text); }
+.footer-logo-version {
+  background: var(--accent); color: #000;
+  font-family: var(--font-mono); font-size: 10px; font-weight: 700;
+  padding: 2px 7px; border-radius: 99px; letter-spacing: 1px;
+}
+.footer-tagline { font-size: 14px; color: var(--text3); font-style: italic; }
+.footer-stack { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; justify-content: center; }
+.stack-badge {
+  font-family: var(--font-mono); font-size: 11px; color: var(--text2);
+  background: var(--bg3); border: 1px solid var(--border);
+  padding: 4px 12px; border-radius: 99px; transition: all 0.2s; cursor: default;
+}
+.stack-badge:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-2px); }
+
+.footer-bottom {
+  max-width: 1280px; margin: 0 auto; padding: 20px 32px;
+  display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap;
+}
+.footer-bottom-left  { font-family: var(--font-mono); font-size: 11px; color: var(--text3); }
+.footer-bottom-center { display: flex; align-items: center; gap: 10px; font-family: var(--font-mono); font-size: 11px; }
+.footer-link { color: var(--text2); text-decoration: none; transition: color 0.2s; white-space: nowrap; }
+.footer-link:hover { color: var(--accent); }
+.footer-sep { color: var(--border2); }
+.footer-bottom-right { font-family: var(--font-mono); font-size: 12px; color: var(--text2); white-space: nowrap; }
+.footer-bottom-right strong { color: var(--accent); }
+
+@media (max-width: 768px) {
+  .footer-top    { padding: 28px 20px 24px; }
+  .footer-bottom { padding: 16px 20px; flex-direction: column; text-align: center; gap: 10px; }
+  .footer-bottom-center { flex-wrap: wrap; justify-content: center; }
+}
+
+/* ── Accent word color pulse — runs AFTER fadeUp completes ── */
+[data-theme="dark"] .title-line.accent {
+  color: #e8ff47;
+  animation: fadeUp 0.6s ease forwards, accentPulseDark 3s ease-in-out 1s infinite;
+}
+[data-theme="light"] .title-line.accent {
+  color: #3d6b00;
+  animation: fadeUp 0.6s ease forwards, accentPulseLight 3s ease-in-out 1s infinite;
+}
+.title-line:nth-child(2) { animation-delay: 0.3s; }
+.title-line:nth-child(4) { animation-delay: 0.5s; }
+
+@keyframes accentPulseDark {
+  0%, 100% { color: #e8ff47; }
+  50%       { color: #ffffff; }
+}
+@keyframes accentPulseLight {
+  0%, 100% { color: #3d6b00; }
+  50%       { color: #6aaa00; }
+}
